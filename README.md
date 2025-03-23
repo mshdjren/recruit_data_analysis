@@ -10,6 +10,8 @@
 - **분석 대상**: 경기도 소재 여러 대학(아주대학교 포함)의 2014~2018년 졸업생 데이터
 - **주요 컬럼**:
   - 기준년도, 학교명, 단과대학명, 학과명(전공), 졸업자수, 국내+해외취업자수, 진학자수, 기타인원수1(입대자 등), 기타인원수2, 취업률(%)
+  - 
+<img src=https://github.com/mshdjren/recruit_data_analysis/blob/master/data.jpg>
 
 ## 분석 방법론
 
@@ -40,3 +42,5 @@
 ### 한계
 1. 데이터에서 사용된 레이블(취업자수, 진학자수 등)이 진로 방향을 충분히 구체적으로 반영하지 못함.
 2. Features 간 중요도를 고려하지 못해 현실적인 진로 분석에는 제한적임.
+<img src=https://github.com/mshdjren/recruit_data_analysis/blob/master/k%3D9.jpg>
+<img src=https://github.com/mshdjren/recruit_data_analysis/blob/master/k%3D20.jpg>
