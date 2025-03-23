@@ -1,53 +1,42 @@
-# Target-class-Unlearning
-**[IPIU 2023] 조건부 적대적 신경망에 대한 선택적 망각 기법**
+# DS-Projcet (Ajou University for sensor-big data course)
+**2014~2018년도경기도 대학 졸업생 취업 현황 데이터 분석 프로젝트**
 
-저자: 문상혁, 홍제형
+## 프로젝트 개요
+본 프로젝트는 경기도 데이터센터에서 제공하는 2014~2018년 경기도 소재 대학 졸업생들의 취업 및 진로 현황 데이터를 분석하여 학과별 진로 방향의 유사성을 확인하고, 연도별 변화 및 경향을 파악하는 것을 목표로 합니다. 이를 통해 졸업생들의 진로 선택에 대한 인사이트를 도출하고, 향후 진로 계획에 도움을 주고자 합니다.
 
-<img src=https://github.com/mshdjren/Target-class-Unlearning/blob/main/assets/main_poster.png height="500" width="900"> 
-<img src=https://github.com/mshdjren/Target-class-Unlearning/blob/main/assets/result_poster.png>
+## 데이터 개요
+- **출처**: 경기데이터드림
+- **데이터 형식**: CSV 파일
+- **분석 대상**: 경기도 소재 여러 대학(아주대학교 포함)의 2014~2018년 졸업생 데이터
+- **주요 컬럼**:
+  - 기준년도, 학교명, 단과대학명, 학과명(전공), 졸업자수, 국내+해외취업자수, 진학자수, 기타인원수1(입대자 등), 기타인원수2, 취업률(%)
 
-## Abstract
-Machine unlearning 은 사전 학습된 네트워크에서 특정 데이터 또는 클래스에 대해 학습된 정보를 지우는 기법이다. 선행 연구들은 분류 기반 네트워크에서 정보 망각을 위한 기법에 집중하였지만, 이미지의 분포를 학습함에 따라 가상 이미지를 생성할 수 있어 사생활 보호 (privacy preserving) 측면에서 중요하게 고려되어야 할 적대적 생성 신경망 (generative adversarial networks, GAN) 기반의 망각 연구는 많이 수행되지 않았다. 본 논문은 GAN 에 machine unlearning 기법을 적용하는 초기 연구로써, 사전학습된 조건부 적대적 신경망 (conditional generative adversarial networks, CGAN)의 특정 클래스 정보를망각하기 위한 두가지 미세 조정 학습 방식을 제안한다. 첫째, 기존 데이터셋에서 망각할 클래스의 데이터셋을 제거한 후 미세 조정한다. 둘째, 첫번째 방법과 동일하되 기존의 클래스 정보를 망각할 클래스 정보로 대체한 데이터셋을 미세 조정한다. 미세 조정한 CGAN 을 통해 생성한 이미지를 다양한 관점 및 기법으로 분석하여 GAN 에서의 학습된 정보를 망각하는 machine unlearning 기법 적용 가능성을 제시한다.
+## 분석 방법론
 
-## Requirements:
-$ git clone https://github.com/eriklindernoren/PyTorch-GAN
+### 1. 데이터 전처리
+- 원본 데이터에서 취업자 수가 0에 가까운 레이블을 제거하고 주요 레이블(취업자수, 진학자수 등) 중심으로 데이터를 재구성.
 
-$ cd PyTorch-GAN/
+### 2. 알고리즘 선택
+- **K-Means Clustering**:
+  - 학과별 진로 방향(취업, 대학원 진학 등)의 유사성을 군집화.
+  - 클러스터 내 단과대학의 일치도를 확인하여 군집화의 적절성을 평가.
 
-$ sudo pip3 install -r requirements.txt
+### 3. 분석 절차
+- 연도별 클러스터링 결과 비교 (2014~2018).
+- 전체 연도 데이터를 활용한 클러스터링 진행.
+- 클러스터 개수(k)를 단계적으로 증가시켜 결과를 분석 (k=2, k=5, k=9 등).
+- 단과대학 수와 k값을 유사하게 설정하여 진로 방향의 유사성을 평가.
 
-````
-torch>=0.4.0
-torchvision
-matplotlib
-numpy
-scipy
-pillow
-urllib3
-scikit-image
-````
-This code has been tested with Ubuntu 20.04, A100 GPUs with CUDA 12.2, Python 3.8, Pytorch 1.10.
+### 4. 시각화
+- 학과를 x축으로, 클러스터링 결과의 특징 합계를 y축으로 하는 산점도 그래프 생성.
+- 연도별 및 전체 데이터를 기반으로 클러스터링 결과 시각화.
 
-## How to run our code
-CGAN에 대한 코드는 [PyTorch-GAN](https://github.com/eriklindernoren/PyTorch-GAN) repository로 부터 작성되었음.
+## 주요 결과 및 한계
 
-- **Training (Target-class unleraning for specific class)**
-````
-$ cd implementations/acgan/
-$ python3 acgan.py
-````
+### 결과
+- 단과대학이 유사할수록 진로 방향이 비슷할 가능성이 높음을 확인.
+- k=9 (단과대학 수와 동일)일 때 가장 적절한 클러스터링 결과를 도출.
 
-- **Testing (generating forgetting/remaining classes images)**
-````
-$ cd implementations/acgan/
-$ python3 acgan.py
-````
-
-## License
-Target-class-Unlearning는 the MIT license (MIT) 아래 오픈 소스 라이브러리임.
-
-## Acknowledgement
-본 연구는 삼성전자 종합기술원 (Samgsung Advanced Institute of Technology)의 지원과 2023년도 정부 (과학기술정보통신부)의 재원으로 정보통신기획평과원의지원(No.2020-0-01373, 인공지능대학원지원(한양대학교))을 받아 수행된 연구임.
-
-
-
+### 한계
+1. 데이터에서 사용된 레이블(취업자수, 진학자수 등)이 진로 방향을 충분히 구체적으로 반영하지 못함.
+2. Features 간 중요도를 고려하지 못해 현실적인 진로 분석에는 제한적임.
